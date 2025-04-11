@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accident Prediction Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Accident Prediction Form</h1>
+        <form id="predictionForm">
+            <!-- ROW 1: Datetime Picker -->
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <label for="datetime" class="form-label">Date and Time of Accident</label>
+                    <input type="datetime-local" class="form-control" id="datetime" name="datetime" required>
+                </div>
+            </div>
+
+            <!-- ROW 2: Latitude and Longitude -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="latitude" class="form-label">Latitude</label>
+                    <input type="number" step="any" class="form-control" id="latitude" name="LATITUDE" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="longitude" class="form-label">Longitude</label>
+                    <input type="number" step="any" class="form-control" id="longitude" name="LONGITUDE" required>
+                </div>
+            </div>
+
+            <!-- ROW 3: Road Class and Accident Location -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="roadClass" class="form-label">Road Class</label>
+                    <select class="form-select" id="roadClass" name="ROAD_CLASS" required>
+                        <option value="0">Major Arterial</option>
+                        <option value="1">Minor Arterial</option>
+                        <option value="2">Collector</option>
+                        <option value="3">Local</option>
+                        <option value="4">Expressway</option>
+                        <option value="5">Pending</option>
+                        <option value="6">Other</option>
+                        <option value="7">Laneway</option>
+                        <option value="8">Expressway Ramp</option>
+                        <option value="9">Major Arterial</option>
+                        <option value="10">Major Shoreline</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="accLoc" class="form-label">Accident Location</label>
+                    <select class="form-select" id="accLoc" name="ACCLOC" required>
+                        <option value="0">N/A</option>
+                        <option value="1">Intersection Related</option>
+                        <option value="3">At Intersection</option>
+                        <option value="4">Non Intersection</option>
+                        <option value="5">Private Driveway</option>
+                        <option value="6">At/Near Private Drive</option>
+                        <option value="7">Underpass or Tunnel</option>
+                        <option value="8">Overpass or Bridge</option>
+                        <option value="9">Trail</option>
+                        <option value="10">Laneway</option>
+                        <option value="11">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- ROW 4: Visibility and Road Surface Conditions -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="visibility" class="form-label">Visibility</label>
+                    <select class="form-select" id="visibility" name="VISIBILITY" required>
+                        <option value="0">Clear</option>
+                        <option value="1">Snow</option>
+                        <option value="2">Other</option>
+                        <option value="3">Rain</option>
+                        <option value="4">Strong Wind</option>
+                        <option value="5">Fog, Mist, Smoke, Dust</option>
+                        <option value="6">Drifting Snow</option>
+                        <option value="7">Freezing Rain</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="rdsfCond" class="form-label">Road Surface Condition</label>
+                    <select class="form-select" id="rdsfCond" name="RDSFCOND" required>
+                        <option value="0">Wet</option>
+                        <option value="1">Slush</option>
+                        <option value="2">Dry</option>
+                        <option value="3">Ice</option>
+                        <option value="4">Loose Snow</option>
+                        <option value="5">Other</option>
+                        <option value="6">Packed Snow</option>
+                        <option value="7">Spilled Liquid</option>
+                        <option value="8">Loose Sand or Gravel</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- ROW 5: Involved Type and Injury -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="invType" class="form-label">Involved Type</label>
+                    <select class="form-select" id="invType" name="INVTYPE" required>
+                        <option value="0">Passenger</option>
+                        <option value="1">Driver</option>
+                        <option value="2">Vehicle Owner</option>
+                        <option value="3">Other Property Owner</option>
+                        <option value="4">Pedestrian</option>
+                        <option value="5">Cyclist</option>
+                        <option value="6">Other</option>
+                        <option value="7">Motorcycle Driver</option>
+                        <option value="8">Truck Driver</option>
+                        <option value="9">In-Line Skater</option>
+                        <option value="10">Driver - Not Hit</option>
+                        <option value="11">Motorcycle Passenger</option>
+                        <option value="12">Moped Driver</option>
+                        <option value="13">Wheelchair</option>
+                        <option value="14">Pedestrian - Not Hit</option>
+                        <option value="15">Trailer Owner</option>
+                        <option value="16">Witness</option>
+                        <option value="17">Cyclist Passenger</option>
+                        <option value="18">Moped Passenger</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="injury" class="form-label">Injury</label>
+                    <select class="form-select" id="injury" name="INJURY" required>
+                        <option value="0">None</option>
+                        <option value="1">Major</option>
+                        <option value="2">Minor</option>
+                        <option value="4">Fatal</option>
+                        <option value="5">Minimal</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- ROW 6: Vehicle Type and Driver Condition -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="vehicleType" class="form-label">Vehicle Type</label>
+                    <select class="form-select" id="vehicleType" name="VEHTYPE" required>
+                        <option value="0">Unknown</option>
+                        <option value="1">Automobile, Station Wagon</option>
+                        <option value="2">Other</option>
+                        <option value="3">Passenger Van</option>
+                        <option value="4">Municipal Transit Bus (TTC)</option>
+                        <option value="5">Taxi</option>
+                        <option value="6">Bicycle</option>
+                        <option value="7">Delivery Van</option>
+                        <option value="8">Motorcycle</option>
+                        <option value="9">Truck - Open</option>
+                        <option value="10">Moped</option>
+                        <option value="11">Pick Up Truck</option>
+                        <option value="12">Tow Truck</option>
+                        <option value="13">Police Vehicle</option>
+                        <option value="14">Truck-Tractor</option>
+                        <option value="15">Street Car</option>
+                        <option value="16">Truck - Closed (Blazer, etc)</option>
+                        <option value="17">Truck - Dump</option>
+                        <option value="18">Bus (Other) (Go Bus, Gray Coach)</option>
+                        <option value="19">Construction Equipment</option>
+                        <option value="21">Intercity Bus</option>
+                        <option value="22">Truck (other)</option>
+                        <option value="23">Fire Vehicle</option>
+                        <option value="24">School Bus</option>
+                        <option value="25">Other Emergency Vehicle</option>
+                        <option value="26">Off Road - 2 Wheels</option>
+                        <option value="27">Truck - Tank</option>
+                        <option value="28">Truck - Car Carrier</option>
+                        <option value="29">Ambulance</option>
+                        <option value="30">Off Road - 4 Wheels</option>
+                        <option value="31">Off Road - Other</option>
+                        <option value="32">Rickshaw</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="drivCond" class="form-label">Driver Condition</label>
+                    <select class="form-select" id="drivCond" name="DRIVCOND" required>
+                        <option value="0">Normal</option>
+                        <option value="4">Unknown</option>
+                        <option value="10">Ability Impaired, Alcohol Over .08</option>
+                        <option value="11">Inattentive</option>
+                        <option value="12">Medical or Physical Disability</option>
+                        <option value="13">Had Been Drinking</option>
+                        <option value="14">Fatigue</option>
+                        <option value="15">Other</option>
+                        <option value="16">Ability Impaired, Alcohol</option>
+                        <option value="17">Ability Impaired, Drugs</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- ROW 7: Pedestrian Type and Pedestrian Action -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="pedType" class="form-label">Pedestrian Type</label>
+                    <select class="form-select" id="pedType" name="PEDTYPE" required>
+                        <option value="0">N/A</option>
+                        <option value="1">Pedestrian hit at mid-block</option>
+                        <option value="2">Vehicle is going straight thru inter. while ped cross without ROW</option>
+                        <option value="3">Vehicle is going straight thru inter. while ped cross with ROW</option>
+                        <option value="4">Pedestrian hit a PXO/ped. Mid-block signal</option>
+                        <option value="5">Pedestrian involved in a collision with transit vehicle anywhere along roadway</option>
+                        <option value="6">Vehicle turns left while ped crosses with ROW at inter.</option>
+                        <option value="7">Other / Undefined</option>
+                        <option value="8">Vehicle turns left while ped crosses without ROW at inter.</option>
+                        <option value="9">Vehicle turns right while ped crosses with ROW at inter.</option>
+                        <option value="10">Vehicle hits the pedestrian walking or running out from between parked vehicles at mid-block</option>
+                        <option value="11">Unknown</option>
+                        <option value="12">Vehicle turns right while ped crosses without ROW at inter.</option>
+                        <option value="13">Pedestrian hit on sidewalk or shoulder</option>
+                        <option value="14">Vehicle is reversing and hits pedestrian</option>
+                        <option value="15">Pedestrian hit at private driveway</option>
+                        <option value="16">Pedestrian hit at parking lot</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="pedAct" class="form-label">Pedestrian Action</label>
+                    <select class="form-select" id="pedAct" name="PEDACT" required>
+                        <option value="0">N/A</option>
+                        <option value="1">Crossing without right of way</option>
+                        <option value="2">Crossing with right of way</option>
+                        <option value="3">Crossing, Pedestrian Crossover</option>
+                        <option value="4">Crossing, no Traffic Control</option>
+                        <option value="5">Other</option>
+                        <option value="6">Running onto Roadway</option>
+                        <option value="7">Coming From Behind Parked Vehicle</option>
+                        <option value="8">Pushing/Working on Vehicle</option>
+                        <option value="9">On Sidewalk or Shoulder</option>
+                        <option value="10">Walking on Roadway Against Traffic</option>
+                        <option value="11">Playing or Working on Highway</option>
+                        <option value="12">Person Getting on/off Vehicle</option>
+                        <option value="13">Walking on Roadway with Traffic</option>
+                        <option value="14">Crossing marked crosswalk without ROW</option>
+                        <option value="15">Person Getting on/off School Bus</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- ROW 8: Pedestrian Condition and Presence Flags -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="pedCond" class="form-label">Pedestrian Condition</label>
+                    <select class="form-select" id="pedCond" name="PEDCOND" required>
+                        <option value="0">N/A</option>
+                        <option value="1">Inattentive</option>
+                        <option value="2">Normal</option>
+                        <option value="3">Unknown</option>
+                        <option value="4">Medical or Physical Disability</option>
+                        <option value="5">Had Been Drinking</option>
+                        <option value="6">Ability Impaired, Alcohol</option>
+                        <option value="7">Other</option>
+                        <option value="8">Ability Impaired, Alcohol Over .80</option>
+                        <option value="9">Ability Impaired, Drugs</option>
+                        <option value="10">Fatigue</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="pedestrian" class="form-label">Pedestrian Involved (0 = No, 1 = Yes)</label>
+                    <input type="number" min="0" max="1" class="form-control" id="pedestrian" name="PEDESTRIAN" required>
+                </div>
+            </div>
+
+            <!-- ROW 9: Motorcycle, Truck, Transit Vehicle -->
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="motorcycle" class="form-label">Motorcycle Involved (0 = No, 1 = Yes)</label>
+                    <input type="number" min="0" max="1" class="form-control" id="motorcycle" name="MOTORCYCLE" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="truck" class="form-label">Truck Involved (0 = No, 1 = Yes)</label>
+                    <input type="number" min="0" max="1" class="form-control" id="truck" name="TRUCK" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="trsnCityVeh" class="form-label">Transit City Vehicle Involved (0 = No, 1 = Yes)</label>
+                    <input type="number" min="0" max="1" class="form-control" id="trsnCityVeh" name="TRSN_CITY_VEH" required>
+                </div>
+            </div>
+
+            <!-- ROW 10: Passenger, Speeding, Alcohol -->
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label for="passenger" class="form-label">Passenger Count</label>
+                    <input type="number" min="0" class="form-control" id="passenger" name="PASSENGER" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="speeding" class="form-label">Speeding Involved (0 = No, 1 = Yes)</label>
+                    <input type="number" min="0" max="1" class="form-control" id="speeding" name="SPEEDING" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="alcohol" class="form-label">Alcohol Involved (0 = No, 1 = Yes)</label>
+                    <input type="number" min="0" max="1" class="form-control" id="alcohol" name="ALCOHOL" required>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Predict</button>
+            </div>
+        </form>
+
+        <!-- Prediction Result -->
+        <div id="result" class="mt-3 text-center" style="display: none;">
+            <h3>Prediction Result</h3>
+            <p id="predictionText"></p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Custom Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Gather form data
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => {
+                // Convert numeric fields to numbers
+                data[key] = isNaN(value) || value === '' ? value : Number(value);
+            });
+
+             // Log the data before sending
+            console.log("Request payload:", data);
+
+
+            // Extract year, month, day_of_week, time_bin_num
+            if (data.datetime) {
+                const dt = new Date(data.datetime);
+                data.YEAR = dt.getFullYear();
+                data.MONTH = dt.getMonth() + 1; // getMonth is 0-based
+                data.DAY_OF_WEEK = dt.getDay(); // 0 (Sun) - 6 (Sat)
+
+                const hour = dt.getHours();
+                if (hour < 6) data.TIME_BIN_NUM = 0;
+                else if (hour < 12) data.TIME_BIN_NUM = 1;
+                else if (hour < 18) data.TIME_BIN_NUM = 2;
+                else data.TIME_BIN_NUM = 3;
+            }
+
+            console.log("Final request payload:", data);
+
+            // Send data to the Flask backend
+            fetch("http://127.0.0.1:5000/predict", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(result => {
+                // Display the result
+                const resultDiv = document.getElementById('result');
+                const predictionText = document.getElementById('predictionText');
+                if (result.error) {
+                    predictionText.innerHTML = `<span class="text-danger">Error: ${result.error}</span>`;
+                } else {
+                    predictionText.innerHTML = `Prediction: <strong>${result.label}</strong> (Value: ${result.prediction})`;
+                }
+                resultDiv.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const predictionText = document.getElementById('predictionText');
+                predictionText.innerHTML = `<span class="text-danger">Error: Unable to get prediction</span>`;
+                document.getElementById('result').style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
