@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  backend:
+    build: .
+    working_dir: /app/Backend
+    command: python app.py
+    volumes:
+      - .:/app
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build: .
+    working_dir: /app/Frontend
+    command: streamlit run App.py --server.port=8501 --server.address=0.0.0.0
+    volumes:
+      - .:/app
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
