@@ -8,24 +8,32 @@ from datetime import datetime
 from helpers import scale_lat_long
 from joblib import load
 from flask_cors import CORS
+from pathlib import Path
 
+# -------------------------
+# Paths (Render-safe)
+# -------------------------
+BASE_DIR = Path(__file__).resolve().parent
+MODEL_PATH = BASE_DIR / "xgb_model.pkl"
+SCALER_PATH = BASE_DIR / "lat_long_scaler.pkl"
+PLOTS_DIR = BASE_DIR / "Plots"
 
 # Configure logging for debugging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
 
 # Load the trained XGBoost model
 try:
-    with open("xgb_model.pkl", "rb") as f:
+    with open(MODEL_PATH, "rb") as f:
         model = pickle.load(f)
-    logging.info("Model loaded successfully!")
+    logging.info(f"Model loaded successfully from {MODEL_PATH}")
 except Exception as e:
     logging.error(f"Error loading model: {e}")
     model = None
 
 # Load the scaler
 try:
-    scaler = load("lat_long_scaler.pkl")
-    logging.info("Scaler loaded successfully!")
+    scaler = load(SCALER_PATH)
+    logging.info(f"Scaler loaded successfully from {SCALER_PATH}")
 except Exception as e:
     logging.error(f"Error loading scaler: {e}")
     scaler = None
@@ -81,6 +89,12 @@ category_mappings = {
 
 @app.route("/predict", methods=["POST"])
 def predict():
+    # Guardrails: if artifacts failed to load, return a clear error
+    if model is None:
+        return jsonify({"error": "Model not loaded on server. Check server logs and file paths."}), 500
+    if scaler is None:
+        return jsonify({"error": "Scaler not loaded on server. Check server logs and file paths."}), 500
+
     data = request.get_json()
     logging.info(f"Incoming data: {data}")
 
@@ -114,16 +128,13 @@ def predict():
             try:
                 data[col] = mapping[data[col].strip()]
             except KeyError:
-                return jsonify({"error": f"Invalid value '{data[col]}' for {col}. Acceptable: {list(mapping.keys())}"}), 400
+                return jsonify({
+                    "error": f"Invalid value '{data[col]}' for {col}. Acceptable: {list(mapping.keys())}"
+                }), 400
 
     try:
         user_lat_long = np.array([[data["LATITUDE"], data["LONGITUDE"]]])
         logging.info(f"Raw lat/long: {user_lat_long}")
-
-        if not isinstance(user_lat_long, np.ndarray):
-            raise ValueError("Input must be a numpy array")
-        if scaler is None:
-            raise ValueError("Scaler is not provided")
 
         scaled_lat_long = scaler.transform(user_lat_long)
         data["LATITUDE"], data["LONGITUDE"] = scaled_lat_long[0]
@@ -145,8 +156,8 @@ def predict():
 
 @app.route("/plots/<filename>", methods=["GET"])
 def serve_plot(filename):
-    plot_dir = os.path.join(os.path.dirname(__file__), "plots")
-    return send_from_directory(plot_dir, filename)
+    # Render/Linux is case-sensitive: folder is "Plots", not "plots"
+    return send_from_directory(str(PLOTS_DIR), filename)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
